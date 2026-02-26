@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Expense Tracker</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="app-header">
+  <div>
+    <h1>Expense Tracker</h1>
+    <div id="monthLabel" class="muted"></div>
+  </div>
+  <div class="header-actions">
+    <button id="settingsBtn" class="btn ghost">Settings</button>
+    <button id="exportBtn" class="btn ghost">Export</button>
+    <label class="btn ghost file">
+      Import
+      <input id="importInput" type="file" accept="application/json" />
+    </label>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="card">
+  <div class="row">
+    <button id="quickProteinBtn" class="btn primary">+ Protein</button>
+    <button id="addExpenseBtn" class="btn">+ Expense</button>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="grid3">
+    <div>
+      <div class="label">This month spending</div>
+      <div id="monthSpending" class="big">—</div>
+    </div>
+    <div>
+      <div class="label">Vs last month</div>
+      <div id="vsLastMonth" class="big">—</div>
+    </div>
+    <div>
+      <div class="label">Coupon savings</div>
+      <div id="monthSavings" class="big">—</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <details>
+    <summary>Category breakdown</summary>
+    <div id="categoryBreakdown" class="list"></div>
+  </details>
+</section>
+
+<section class="card">
+  <div class="row space">
+    <h2 class="h2">Previous months</h2>
+    <div id="snapshotsCount" class="muted"></div>
+  </div>
+  <div id="snapshotsList" class="list"></div>
+</section>
+
+<section class="card">
+  <div class="row space">
+    <h2 class="h2">This month entries</h2>
+    <div id="entriesCount" class="muted"></div>
+  </div>
+  <div id="entriesList" class="list"></div>
+</section>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
