@@ -43,6 +43,30 @@ function addTransaction(t){
   save(data);
 }
 
+function undoLastTransaction(){
+  const data=load();
+  const txs=data.transactions||[];
+  if(!txs.length) return false;
+  txs.pop();
+  data.transactions=txs;
+  save(data);
+  return true;
+}
+
+function resetCurrentMonth(category=null){
+  const data=load();
+  const m=monthKey();
+  const txs=data.transactions||[];
+
+  data.transactions=txs.filter(t=>{
+    if(t.month!==m) return true;
+    if(!category) return false;
+    return t.category!==category;
+  });
+
+  save(data);
+}
+
 function refresh(){
   const m=monthKey();
   document.getElementById("monthLabel").textContent="Month: "+m;
@@ -127,6 +151,38 @@ document.getElementById("addExpenseBtn").onclick=()=>{
     date:todayISO(),
     month:monthKey()
   });
+  refresh();
+};
+
+document.getElementById("undoLastBtn").onclick=()=>{
+  const ok=confirm("Undo last transaction?");
+  if(!ok) return;
+  const changed=undoLastTransaction();
+  if(!changed){
+    alert("No transactions to undo.");
+    return;
+  }
+  refresh();
+};
+
+document.getElementById("resetBtn").onclick=()=>{
+  const input=prompt("Type category id to reset only that category for this month, or leave empty to reset the whole month.");
+  if(input===null) return;
+  const category=input.trim()||null;
+
+  if(category && !CATEGORIES.some(c=>c.id===category)){
+    alert("Invalid category id.");
+    return;
+  }
+
+  const ok=confirm(
+    category
+      ? `Reset current month entries for "${category}"?`
+      : "Reset ALL current month entries?"
+  );
+  if(!ok) return;
+
+  resetCurrentMonth(category);
   refresh();
 };
 
